@@ -1,21 +1,17 @@
 {
   "name": "tauri-plugin-serialport-api",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": "47vigen",
-  "description": "",
+  "description": "Tauri Serialport API",
   "browser": "webview-dist/index.js",
   "main": "webview-dist/index.js",
   "types": "webview-dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c ./webview-src/rollup.config.js",
-    "prepublishOnly": "pnpm build",
-    "pretest": "pnpm build"
+    "build": "cd ./webview-src && tsc -b --force",
+    "prepublishOnly": "yarn build",
+    "pretest": "yarn build"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "13.3.0",
-    "@rollup/plugin-typescript": "8.3.3",
-    "@rollup/plugin-terser": "0.4.4",
-    "rollup": "2.75.6",
     "typescript": "4.7.3"
   },
   "dependencies": {

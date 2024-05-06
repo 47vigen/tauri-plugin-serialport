@@ -1,1 +1,298 @@
-var e,t,i,n;function a(e,t=!1){return window.__TAURI_INTERNALS__.transformCallback(e,t)}async function r(e,t={},i){return window.__TAURI_INTERNALS__.invoke(e,t,i)}"function"==typeof SuppressedError&&SuppressedError;class s{get rid(){return function(e,t,i,n){if("a"===i&&!n)throw new TypeError("Private accessor was defined without a getter");if("function"==typeof t?e!==t||!n:!t.has(e))throw new TypeError("Cannot read private member from an object whose class did not declare it");return"m"===i?n:"a"===i?n.call(e):n?n.value:t.get(e)}(this,e,"f")}constructor(t){e.set(this,void 0),function(e,t,i,n,a){if("m"===n)throw new TypeError("Private method is not writable");if("a"===n&&!a)throw new TypeError("Private accessor was defined without a setter");if("function"==typeof t?e!==t||!a:!t.has(e))throw new TypeError("Cannot write private member to an object whose class did not declare it");"a"===n?a.call(e,i):a?a.value=i:t.set(e,i)}(this,e,t,"f")}async close(){return r("plugin:resources|close",{rid:this.rid})}}e=new WeakMap;class l{constructor(e,t){this.type="Logical",this.width=e,this.height=t}}class o{constructor(e,t){this.type="Physical",this.width=e,this.height=t}toLogical(e){return new l(this.width/e,this.height/e)}}class u{constructor(e,t){this.type="Logical",this.x=e,this.y=t}}class c{constructor(e,t){this.type="Physical",this.x=e,this.y=t}toLogical(e){return new u(this.x/e,this.y/e)}}async function h(e,t){await r("plugin:event|unlisten",{event:e,eventId:t})}async function p(e,t,i){var n;const s="string"==typeof(null==i?void 0:i.target)?{kind:"AnyLabel",label:i.target}:null!==(n=null==i?void 0:i.target)&&void 0!==n?n:{kind:"Any"};return r("plugin:event|listen",{event:e,target:s,handler:a(t)}).then((t=>async()=>h(e,t)))}!function(e){e.WINDOW_RESIZED="tauri://resize",e.WINDOW_MOVED="tauri://move",e.WINDOW_CLOSE_REQUESTED="tauri://close-requested",e.WINDOW_DESTROYED="tauri://destroyed",e.WINDOW_FOCUS="tauri://focus",e.WINDOW_BLUR="tauri://blur",e.WINDOW_SCALE_FACTOR_CHANGED="tauri://scale-change",e.WINDOW_THEME_CHANGED="tauri://theme-changed",e.WINDOW_CREATED="tauri://window-created",e.WEBVIEW_CREATED="tauri://webview-created",e.DRAG="tauri://drag",e.DROP="tauri://drop",e.DROP_OVER="tauri://drop-over",e.DROP_CANCELLED="tauri://drag-cancelled"}(t||(t={}));class d extends s{constructor(e){super(e)}static async new(e,t,i){return r("plugin:image|new",{rgba:w(e),width:t,height:i}).then((e=>new d(e)))}static async fromBytes(e){return r("plugin:image|from_bytes",{bytes:w(e)}).then((e=>new d(e)))}static async fromPath(e){return r("plugin:image|from_path",{path:e}).then((e=>new d(e)))}async rgba(){return r("plugin:image|rgba",{rid:this.rid}).then((e=>new Uint8Array(e)))}async size(){return r("plugin:image|size",{rid:this.rid})}}function w(e){return null==e?null:"string"==typeof e?e:e instanceof Uint8Array?Array.from(e):e instanceof ArrayBuffer?Array.from(new Uint8Array(e)):e instanceof d?e.rid:e}!function(e){e[e.Critical=1]="Critical",e[e.Informational=2]="Informational"}(i||(i={}));class y{constructor(e){this._preventDefault=!1,this.event=e.event,this.id=e.id}preventDefault(){this._preventDefault=!0}isPreventDefault(){return this._preventDefault}}function b(){return new _(window.__TAURI_INTERNALS__.metadata.currentWindow.label,{skip:!0})}function g(){return window.__TAURI_INTERNALS__.metadata.windows.map((e=>new _(e.label,{skip:!0})))}!function(e){e.None="none",e.Normal="normal",e.Indeterminate="indeterminate",e.Paused="paused",e.Error="error"}(n||(n={}));const m=["tauri://created","tauri://error"];class _{constructor(e,t={}){var i;this.label=e,this.listeners=Object.create(null),(null==t?void 0:t.skip)||r("plugin:window|create",{options:{...t,parent:"string"==typeof t.parent?t.parent:null===(i=t.parent)||void 0===i?void 0:i.label,label:e}}).then((async()=>this.emit("tauri://created"))).catch((async e=>this.emit("tauri://error",e)))}static getByLabel(e){var t;return null!==(t=g().find((t=>t.label===e)))&&void 0!==t?t:null}static getCurrent(){return b()}static getAll(){return g()}static async getFocusedWindow(){for(const e of g())if(await e.isFocused())return e;return null}async listen(e,t){return this._handleTauriEvent(e,t)?Promise.resolve((()=>{const i=this.listeners[e];i.splice(i.indexOf(t),1)})):p(e,t,{target:{kind:"Window",label:this.label}})}async once(e,t){return this._handleTauriEvent(e,t)?Promise.resolve((()=>{const i=this.listeners[e];i.splice(i.indexOf(t),1)})):async function(e,t,i){return p(e,(i=>{t(i),h(e,i.id).catch((()=>{}))}),i)}(e,t,{target:{kind:"Window",label:this.label}})}async emit(e,t){if(m.includes(e)){for(const i of this.listeners[e]||[])i({event:e,id:-1,payload:t});return Promise.resolve()}return async function(e,t){await r("plugin:event|emit",{event:e,payload:t})}(e,t)}async emitTo(e,t,i){if(m.includes(t)){for(const e of this.listeners[t]||[])e({event:t,id:-1,payload:i});return Promise.resolve()}return async function(e,t,i){const n="string"==typeof e?{kind:"AnyLabel",label:e}:e;await r("plugin:event|emit_to",{target:n,event:t,payload:i})}(e,t,i)}_handleTauriEvent(e,t){return!!m.includes(e)&&(e in this.listeners?this.listeners[e].push(t):this.listeners[e]=[t],!0)}async scaleFactor(){return r("plugin:window|scale_factor",{label:this.label})}async innerPosition(){return r("plugin:window|inner_position",{label:this.label}).then((({x:e,y:t})=>new c(e,t)))}async outerPosition(){return r("plugin:window|outer_position",{label:this.label}).then((({x:e,y:t})=>new c(e,t)))}async innerSize(){return r("plugin:window|inner_size",{label:this.label}).then((({width:e,height:t})=>new o(e,t)))}async outerSize(){return r("plugin:window|outer_size",{label:this.label}).then((({width:e,height:t})=>new o(e,t)))}async isFullscreen(){return r("plugin:window|is_fullscreen",{label:this.label})}async isMinimized(){return r("plugin:window|is_minimized",{label:this.label})}async isMaximized(){return r("plugin:window|is_maximized",{label:this.label})}async isFocused(){return r("plugin:window|is_focused",{label:this.label})}async isDecorated(){return r("plugin:window|is_decorated",{label:this.label})}async isResizable(){return r("plugin:window|is_resizable",{label:this.label})}async isMaximizable(){return r("plugin:window|is_maximizable",{label:this.label})}async isMinimizable(){return r("plugin:window|is_minimizable",{label:this.label})}async isClosable(){return r("plugin:window|is_closable",{label:this.label})}async isVisible(){return r("plugin:window|is_visible",{label:this.label})}async title(){return r("plugin:window|title",{label:this.label})}async theme(){return r("plugin:window|theme",{label:this.label})}async center(){return r("plugin:window|center",{label:this.label})}async requestUserAttention(e){let t=null;return e&&(t=e===i.Critical?{type:"Critical"}:{type:"Informational"}),r("plugin:window|request_user_attention",{label:this.label,value:t})}async setResizable(e){return r("plugin:window|set_resizable",{label:this.label,value:e})}async setMaximizable(e){return r("plugin:window|set_maximizable",{label:this.label,value:e})}async setMinimizable(e){return r("plugin:window|set_minimizable",{label:this.label,value:e})}async setClosable(e){return r("plugin:window|set_closable",{label:this.label,value:e})}async setTitle(e){return r("plugin:window|set_title",{label:this.label,value:e})}async maximize(){return r("plugin:window|maximize",{label:this.label})}async unmaximize(){return r("plugin:window|unmaximize",{label:this.label})}async toggleMaximize(){return r("plugin:window|toggle_maximize",{label:this.label})}async minimize(){return r("plugin:window|minimize",{label:this.label})}async unminimize(){return r("plugin:window|unminimize",{label:this.label})}async show(){return r("plugin:window|show",{label:this.label})}async hide(){return r("plugin:window|hide",{label:this.label})}async close(){return r("plugin:window|close",{label:this.label})}async destroy(){return r("plugin:window|destroy",{label:this.label})}async setDecorations(e){return r("plugin:window|set_decorations",{label:this.label,value:e})}async setShadow(e){return r("plugin:window|set_shadow",{label:this.label,value:e})}async setEffects(e){return r("plugin:window|set_effects",{label:this.label,value:e})}async clearEffects(){return r("plugin:window|set_effects",{label:this.label,value:null})}async setAlwaysOnTop(e){return r("plugin:window|set_always_on_top",{label:this.label,value:e})}async setAlwaysOnBottom(e){return r("plugin:window|set_always_on_bottom",{label:this.label,value:e})}async setContentProtected(e){return r("plugin:window|set_content_protected",{label:this.label,value:e})}async setSize(e){if(!e||"Logical"!==e.type&&"Physical"!==e.type)throw new Error("the `size` argument must be either a LogicalSize or a PhysicalSize instance");const t={};return t[`${e.type}`]={width:e.width,height:e.height},r("plugin:window|set_size",{label:this.label,value:t})}async setMinSize(e){if(e&&"Logical"!==e.type&&"Physical"!==e.type)throw new Error("the `size` argument must be either a LogicalSize or a PhysicalSize instance");let t=null;return e&&(t={},t[`${e.type}`]={width:e.width,height:e.height}),r("plugin:window|set_min_size",{label:this.label,value:t})}async setMaxSize(e){if(e&&"Logical"!==e.type&&"Physical"!==e.type)throw new Error("the `size` argument must be either a LogicalSize or a PhysicalSize instance");let t=null;return e&&(t={},t[`${e.type}`]={width:e.width,height:e.height}),r("plugin:window|set_max_size",{label:this.label,value:t})}async setPosition(e){if(!e||"Logical"!==e.type&&"Physical"!==e.type)throw new Error("the `position` argument must be either a LogicalPosition or a PhysicalPosition instance");const t={};return t[`${e.type}`]={x:e.x,y:e.y},r("plugin:window|set_position",{label:this.label,value:t})}async setFullscreen(e){return r("plugin:window|set_fullscreen",{label:this.label,value:e})}async setFocus(){return r("plugin:window|set_focus",{label:this.label})}async setIcon(e){return r("plugin:window|set_icon",{label:this.label,value:w(e)})}async setSkipTaskbar(e){return r("plugin:window|set_skip_taskbar",{label:this.label,value:e})}async setCursorGrab(e){return r("plugin:window|set_cursor_grab",{label:this.label,value:e})}async setCursorVisible(e){return r("plugin:window|set_cursor_visible",{label:this.label,value:e})}async setCursorIcon(e){return r("plugin:window|set_cursor_icon",{label:this.label,value:e})}async setCursorPosition(e){if(!e||"Logical"!==e.type&&"Physical"!==e.type)throw new Error("the `position` argument must be either a LogicalPosition or a PhysicalPosition instance");const t={};return t[`${e.type}`]={x:e.x,y:e.y},r("plugin:window|set_cursor_position",{label:this.label,value:t})}async setIgnoreCursorEvents(e){return r("plugin:window|set_ignore_cursor_events",{label:this.label,value:e})}async startDragging(){return r("plugin:window|start_dragging",{label:this.label})}async startResizeDragging(e){return r("plugin:window|start_resize_dragging",{label:this.label,value:e})}async setProgressBar(e){return r("plugin:window|set_progress_bar",{label:this.label,value:e})}async setVisibleOnAllWorkspaces(e){return r("plugin:window|set_visible_on_all_workspaces",{label:this.label,value:e})}async onResized(e){return this.listen(t.WINDOW_RESIZED,(t=>{var i;t.payload=(i=t.payload,new o(i.width,i.height)),e(t)}))}async onMoved(e){return this.listen(t.WINDOW_MOVED,(t=>{t.payload=P(t.payload),e(t)}))}async onCloseRequested(e){return this.listen(t.WINDOW_CLOSE_REQUESTED,(t=>{const i=new y(t);Promise.resolve(e(i)).then((()=>{if(!i.isPreventDefault())return this.destroy()}))}))}async onDragDropEvent(e){const i=await this.listen(t.DRAG,(t=>{e({...t,payload:{type:"dragged",paths:t.payload.paths,position:P(t.payload.position)}})})),n=await this.listen(t.DROP,(t=>{e({...t,payload:{type:"dropped",paths:t.payload.paths,position:P(t.payload.position)}})})),a=await this.listen(t.DROP_OVER,(t=>{e({...t,payload:{type:"dragOver",position:P(t.payload.position)}})})),r=await this.listen(t.DROP_CANCELLED,(t=>{e({...t,payload:{type:"cancelled"}})}));return()=>{i(),n(),a(),r()}}async onFocusChanged(e){const i=await this.listen(t.WINDOW_FOCUS,(t=>{e({...t,payload:!0})})),n=await this.listen(t.WINDOW_BLUR,(t=>{e({...t,payload:!1})}));return()=>{i(),n()}}async onScaleChanged(e){return this.listen(t.WINDOW_SCALE_FACTOR_CHANGED,e)}async onThemeChanged(e){return this.listen(t.WINDOW_THEME_CHANGED,e)}}var f,v;function P(e){return new c(e.x,e.y)}!function(e){e.AppearanceBased="appearanceBased",e.Light="light",e.Dark="dark",e.MediumLight="mediumLight",e.UltraDark="ultraDark",e.Titlebar="titlebar",e.Selection="selection",e.Menu="menu",e.Popover="popover",e.Sidebar="sidebar",e.HeaderView="headerView",e.Sheet="sheet",e.WindowBackground="windowBackground",e.HudWindow="hudWindow",e.FullScreenUI="fullScreenUI",e.Tooltip="tooltip",e.ContentBackground="contentBackground",e.UnderWindowBackground="underWindowBackground",e.UnderPageBackground="underPageBackground",e.Mica="mica",e.Blur="blur",e.Acrylic="acrylic",e.Tabbed="tabbed",e.TabbedDark="tabbedDark",e.TabbedLight="tabbedLight"}(f||(f={})),function(e){e.FollowsWindowActiveState="followsWindowActiveState",e.Active="active",e.Inactive="inactive"}(v||(v={}));class E{isOpen;unListen;encoding;options;size;constructor(e){this.isOpen=!1,this.encoding=e.encoding||"utf-8",this.options={portName:e.portName,baudRate:e.baudRate,dataBits:e.dataBits||8,flowControl:e.flowControl||null,parity:e.parity||null,stopBits:e.stopBits||2,timeout:e.timeout||200},this.size=e.size||1024}static async available_ports(){try{return await r("plugin:serialport|available_ports")}catch(e){return Promise.reject(e)}}static async forceClose(e){return await r("plugin:serialport|force_close",{portName:e})}static async closeAll(){return await r("plugin:serialport|close_all")}async cancelListen(){try{return void(this.unListen&&(this.unListen(),this.unListen=void 0))}catch(e){return Promise.reject("Failed to cancel serial monitoring: "+e)}}async cancelRead(){try{return await r("plugin:serialport|cancel_read",{portName:this.options.portName})}catch(e){return Promise.reject(e)}}async change(e){try{let t=!1;return this.isOpen&&(t=!0,await this.close()),e.portName&&(this.options.portName=e.portName),e.baudRate&&(this.options.baudRate=e.baudRate),t&&await this.open(),Promise.resolve()}catch(e){return Promise.reject(e)}}async close(){try{if(!this.isOpen)return;await this.cancelRead();const e=await r("plugin:serialport|close",{portName:this.options.portName});return await this.cancelListen(),this.isOpen=!1,e}catch(e){return Promise.reject(e)}}async listen(e,t=!0){try{const i=b();await this.cancelListen();let n="plugin-serialport-read-"+this.options.portName;return void(this.unListen=await i.listen(n,(({payload:i})=>{try{if(t){const t=new TextDecoder(this.encoding).decode(new Uint8Array(i.data));e(t)}else e(new Uint8Array(i.data))}catch(e){console.error(e)}})))}catch(e){return Promise.reject("Failed to monitor serial port data: "+e)}}async open(){try{if(!this.options.portName)return Promise.reject("Port name can not be empty!");if(!this.options.baudRate)return Promise.reject("BaudRate can not be empty!");if(this.isOpen)return;const e=await r("plugin:serialport|open",{portName:this.options.portName,baudRate:this.options.baudRate,dataBits:this.options.dataBits,flowControl:this.options.flowControl,parity:this.options.parity,stopBits:this.options.stopBits,timeout:this.options.timeout});return this.isOpen=!0,Promise.resolve(e)}catch(e){return Promise.reject(e)}}async read(e){try{return await r("plugin:serialport|read",{portName:this.options.portName,timeout:e?.timeout||this.options.timeout,size:e?.size||this.size})}catch(e){return Promise.reject(e)}}async setBaudRate(e){try{let t=!1;return this.isOpen&&(t=!0,await this.close()),this.options.baudRate=e,t&&await this.open(),Promise.resolve()}catch(e){return Promise.reject(e)}}async setPortName(e){try{let t=!1;return this.isOpen&&(t=!0,await this.close()),this.options.portName=e,t&&await this.open(),Promise.resolve()}catch(e){return Promise.reject(e)}}async write(e){try{return this.isOpen?await r("plugin:serialport|write",{value:e,portName:this.options.portName}):Promise.reject(`Serial port ${this.options.portName} not opened!`)}catch(e){return Promise.reject(e)}}async writeBinary(e){try{return this.isOpen?e instanceof Uint8Array||e instanceof Array?await r("plugin:serialport|write_binary",{value:Array.from(e),portName:this.options.portName}):Promise.reject("value type not admitted! Expected type: string, Uint8Array, number[]"):Promise.reject(`Serial port ${this.options.portName} not opened!`)}catch(e){return Promise.reject(e)}}}export{E as Serialport};
+import { invoke } from "@tauri-apps/api/core";
+import { getCurrent } from "@tauri-apps/api/window";
+class Serialport {
+    isOpen;
+    unListen;
+    encoding;
+    options;
+    size;
+    constructor(options) {
+        this.isOpen = false;
+        this.encoding = options.encoding || "utf-8";
+        this.options = {
+            portName: options.portName,
+            baudRate: options.baudRate,
+            dataBits: options.dataBits || 8,
+            flowControl: options.flowControl || null,
+            parity: options.parity || null,
+            stopBits: options.stopBits || 2,
+            timeout: options.timeout || 200
+        };
+        this.size = options.size || 1024;
+    }
+    /**
+     * @description: Returns a list of all serial ports on system
+     * @return {Promise<string[]>}
+     */
+    static async available_ports() {
+        try {
+            return await invoke("plugin:serialport|available_ports");
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    /**
+     * @description: Forces serial port closure
+     * @param {string} portName
+     * @return {Promise<void>}
+     */
+    static async forceClose(portName) {
+        return await invoke("plugin:serialport|force_close", {
+            portName
+        });
+    }
+    /**
+     * @description: Closes all serial ports
+     * @return {Promise<void>}
+     */
+    static async closeAll() {
+        return await invoke("plugin:serialport|close_all");
+    }
+    /**
+     * @description: Stops listening on a serial port
+     * @return {Promise<void>}
+     */
+    async cancelListen() {
+        try {
+            if (this.unListen) {
+                this.unListen();
+                this.unListen = undefined;
+            }
+            return;
+        }
+        catch (error) {
+            return Promise.reject("Failed to cancel serial monitoring: " + error);
+        }
+    }
+    /**
+     * @description: Stops reading data
+     * @return {Promise<void>}
+     */
+    async cancelRead() {
+        try {
+            return await invoke("plugin:serialport|cancel_read", {
+                portName: this.options.portName
+            });
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    /**
+     * @description: Changes serial port
+     * @param {object} options
+     * @return {Promise<void>}
+     */
+    async change(options) {
+        try {
+            let isOpened = false;
+            if (this.isOpen) {
+                isOpened = true;
+                await this.close();
+            }
+            if (options.portName) {
+                this.options.portName = options.portName;
+            }
+            if (options.baudRate) {
+                this.options.baudRate = options.baudRate;
+            }
+            if (isOpened) {
+                await this.open();
+            }
+            return Promise.resolve();
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    /**
+     * @description: Close serial port
+     * @return {Promise<InvokeResult>}
+     */
+    async close() {
+        try {
+            if (!this.isOpen) {
+                return;
+            }
+            await this.cancelRead();
+            const res = await invoke("plugin:serialport|close", {
+                portName: this.options.portName
+            });
+            await this.cancelListen();
+            this.isOpen = false;
+            return res;
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    /**
+     * @description: Monitors serial port information
+     * @param {function} fn
+     * @return {Promise<void>}
+     */
+    async listen(fn, isDecode = true) {
+        try {
+            const appWindow = getCurrent();
+            await this.cancelListen();
+            let readEvent = "plugin-serialport-read-" + this.options.portName;
+            this.unListen = await appWindow.listen(readEvent, ({ payload }) => {
+                try {
+                    if (isDecode) {
+                        const decoder = new TextDecoder(this.encoding);
+                        const data = decoder.decode(new Uint8Array(payload.data));
+                        fn(data);
+                    }
+                    else {
+                        fn(new Uint8Array(payload.data));
+                    }
+                }
+                catch (error) {
+                    console.error(error);
+                }
+            });
+            return;
+        }
+        catch (error) {
+            return Promise.reject("Failed to monitor serial port data: " + error);
+        }
+    }
+    /**
+     * @description: Opens serial port
+     * @return {*}
+     */
+    async open() {
+        try {
+            if (!this.options.portName) {
+                return Promise.reject(`Port name can not be empty!`);
+            }
+            if (!this.options.baudRate) {
+                return Promise.reject(`BaudRate can not be empty!`);
+            }
+            if (this.isOpen) {
+                return;
+            }
+            const res = await invoke("plugin:serialport|open", {
+                portName: this.options.portName,
+                baudRate: this.options.baudRate,
+                dataBits: this.options.dataBits,
+                flowControl: this.options.flowControl,
+                parity: this.options.parity,
+                stopBits: this.options.stopBits,
+                timeout: this.options.timeout
+            });
+            this.isOpen = true;
+            return Promise.resolve(res);
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    /**
+     * @description: Reads serial port information
+     * @param {ReadOptions} options { timeout, size }
+     * @return {Promise<void>}
+     */
+    async read(options) {
+        try {
+            return await invoke("plugin:serialport|read", {
+                portName: this.options.portName,
+                timeout: options?.timeout || this.options.timeout,
+                size: options?.size || this.size
+            });
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    /**
+     * @description: Sets baudrate
+     * @param {number} value
+     * @return {Promise<void>}
+     */
+    async setBaudRate(value) {
+        try {
+            let isOpened = false;
+            if (this.isOpen) {
+                isOpened = true;
+                await this.close();
+            }
+            this.options.baudRate = value;
+            if (isOpened) {
+                await this.open();
+            }
+            return Promise.resolve();
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    /**
+     * @description: Sets port name
+     * @param {string} value
+     * @return {Promise<void>}
+     */
+    async setPortName(value) {
+        try {
+            let isOpened = false;
+            if (this.isOpen) {
+                isOpened = true;
+                await this.close();
+            }
+            this.options.portName = value;
+            if (isOpened) {
+                await this.open();
+            }
+            return Promise.resolve();
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    /**
+     * @description: Writes data to serial port
+     * @param {string} value
+     * @return {Promise<number>}
+     */
+    async write(value) {
+        try {
+            if (!this.isOpen) {
+                return Promise.reject(`Serial port ${this.options.portName} not opened!`);
+            }
+            return await invoke("plugin:serialport|write", {
+                value,
+                portName: this.options.portName
+            });
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    /**
+     * @description: Writes binary data to serial port
+     * @param {Uint8Array} value
+     * @return {Promise<number>}
+     */
+    async writeBinary(value) {
+        try {
+            if (!this.isOpen) {
+                return Promise.reject(`Serial port ${this.options.portName} not opened!`);
+            }
+            if (value instanceof Uint8Array || value instanceof Array) {
+                return await invoke("plugin:serialport|write_binary", {
+                    value: Array.from(value),
+                    portName: this.options.portName
+                });
+            }
+            else {
+                return Promise.reject("value type not admitted! Expected type: string, Uint8Array, number[]");
+            }
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+}
+export { Serialport };
+// 🐍
