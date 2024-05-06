@@ -3,13 +3,16 @@ name = "tauri-plugin-serialport"
 version = "1.5.0"
 authors = [ "47vigen" ]
 description = ""
-license = ""
-repository = ""
 edition = "2021"
-exclude = ["/examples", "/webview-dist", "/webview-src", "node_modules"]
+rust-version = "1.70"
+exclude = ["/examples", "/webview-dist", "/webview-src", "/node_modules"]
+links = "tauri-plugin-serialport"
 
 [dependencies]
-tauri = { version = "2.0.0-beta" }
+tauri = { version = "2.0.0-beta.2" }
 serde = "1.0"
 thiserror = "1.0"
 serialport = "4.3.0"
+
+[build-dependencies]
+tauri-plugin = { version = "2.0.0-beta.1", features = ["build"] }
