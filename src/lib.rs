@@ -13,8 +13,6 @@ pub use models::*;
 
 #[cfg(desktop)]
 mod desktop;
-#[cfg(mobile)]
-mod mobile;
 
 mod commands;
 mod err;
@@ -23,8 +21,6 @@ mod state;
 
 #[cfg(desktop)]
 use desktop::Serialport;
-#[cfg(mobile)]
-use mobile::Serialport;
 
 /// Extensions to [`tauri::App`], [`tauri::AppHandle`] and [`tauri::Window`] to access the serialport APIs.
 pub trait SerialportExt<R: Runtime> {
@@ -52,8 +48,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             commands::write_binary,
         ])
         .setup(|app, api| {
-            #[cfg(mobile)]
-            let serialport = mobile::init(app, api)?;
             #[cfg(desktop)]
             let serialport: Serialport<R> = desktop::init(app, api)?;
             app.manage(serialport);

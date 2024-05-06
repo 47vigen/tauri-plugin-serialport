@@ -295,31 +295,129 @@
       "type": "string",
       "oneOf": [
         {
-          "description": "allow-execute -> Enables the execute command without any pre-configured scope.",
+          "description": "allow-available-ports -> Enables the available_ports command without any pre-configured scope.",
           "type": "string",
           "enum": [
-            "allow-execute"
+            "allow-available-ports"
           ]
         },
         {
-          "description": "deny-execute -> Denies the execute command without any pre-configured scope.",
+          "description": "deny-available-ports -> Denies the available_ports command without any pre-configured scope.",
           "type": "string",
           "enum": [
-            "deny-execute"
+            "deny-available-ports"
           ]
         },
         {
-          "description": "allow-ping -> Enables the ping command without any pre-configured scope.",
+          "description": "allow-cancel-read -> Enables the cancel_read command without any pre-configured scope.",
           "type": "string",
           "enum": [
-            "allow-ping"
+            "allow-cancel-read"
           ]
         },
         {
-          "description": "deny-ping -> Denies the ping command without any pre-configured scope.",
+          "description": "deny-cancel-read -> Denies the cancel_read command without any pre-configured scope.",
           "type": "string",
           "enum": [
-            "deny-ping"
+            "deny-cancel-read"
+          ]
+        },
+        {
+          "description": "allow-close -> Enables the close command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-close"
+          ]
+        },
+        {
+          "description": "deny-close -> Denies the close command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-close"
+          ]
+        },
+        {
+          "description": "allow-close-all -> Enables the close_all command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-close-all"
+          ]
+        },
+        {
+          "description": "deny-close-all -> Denies the close_all command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-close-all"
+          ]
+        },
+        {
+          "description": "allow-force-close -> Enables the force_close command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-force-close"
+          ]
+        },
+        {
+          "description": "deny-force-close -> Denies the force_close command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-force-close"
+          ]
+        },
+        {
+          "description": "allow-open -> Enables the open command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-open"
+          ]
+        },
+        {
+          "description": "deny-open -> Denies the open command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-open"
+          ]
+        },
+        {
+          "description": "allow-read -> Enables the read command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-read"
+          ]
+        },
+        {
+          "description": "deny-read -> Denies the read command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-read"
+          ]
+        },
+        {
+          "description": "allow-write -> Enables the write command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-write"
+          ]
+        },
+        {
+          "description": "deny-write -> Denies the write command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-write"
+          ]
+        },
+        {
+          "description": "allow-write-binary -> Enables the write_binary command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-write-binary"
+          ]
+        },
+        {
+          "description": "deny-write-binary -> Denies the write_binary command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-write-binary"
           ]
         }
       ]
