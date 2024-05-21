@@ -11,27 +11,10 @@ use std::{
 
 pub use models::*;
 
-#[cfg(desktop)]
-mod desktop;
-
 mod commands;
 mod err;
 mod models;
 mod state;
-
-#[cfg(desktop)]
-use desktop::Serialport;
-
-/// Extensions to [`tauri::App`], [`tauri::AppHandle`] and [`tauri::Window`] to access the serialport APIs.
-pub trait SerialportExt<R: Runtime> {
-    fn serialport(&self) -> &Serialport<R>;
-}
-
-impl<R: Runtime, T: Manager<R>> crate::SerialportExt<R> for T {
-    fn serialport(&self) -> &Serialport<R> {
-        self.state::<Serialport<R>>().inner()
-    }
-}
 
 /// Initializes the plugin.
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
@@ -47,12 +30,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             commands::write,
             commands::write_binary,
         ])
-        .setup(|app, api| {
-            #[cfg(desktop)]
-            let serialport: Serialport<R> = desktop::init(app, api)?;
-            app.manage(serialport);
-
-            // manage state so it is accessible by the commands
+        .setup(move |app, _webview| {
             app.manage(SerialPortState {
                 serialports: Arc::new(Mutex::new(HashMap::new())),
             });
