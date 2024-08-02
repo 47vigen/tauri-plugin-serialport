@@ -139,7 +139,10 @@ class Serialport {
             let readEvent = "plugin-serialport-read-" + this.options.portName;
             this.unListen = await appWindow.listen(readEvent, ({ payload }) => {
                 try {
-                    if (isDecode) {
+                    if (isDecode === "hex") {
+                        fn(payload.hex_string);
+                    }
+                    else if (isDecode) {
                         const decoder = new TextDecoder(this.encoding);
                         const data = decoder.decode(new Uint8Array(payload.data));
                         fn(data);

@@ -6,6 +6,7 @@ export interface InvokeResult {
 export interface ReadDataResult {
     size: number;
     data: number[];
+    hex_string: string;
 }
 export interface SerialportOptions {
     portName: string;
@@ -83,7 +84,7 @@ declare class Serialport {
      * @param {function} fn
      * @return {Promise<void>}
      */
-    listen(fn: (...args: any[]) => void, isDecode?: boolean): Promise<void>;
+    listen(fn: (...args: any[]) => void, isDecode?: boolean | "hex"): Promise<void>;
     /**
      * @description: Opens serial port
      * @return {*}
