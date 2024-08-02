@@ -1,20 +1,244 @@
-| Permission | Description |
-|------|-----|
-|`allow-available-ports`|Enables the available_ports command without any pre-configured scope.|
-|`deny-available-ports`|Denies the available_ports command without any pre-configured scope.|
-|`allow-cancel-read`|Enables the cancel_read command without any pre-configured scope.|
-|`deny-cancel-read`|Denies the cancel_read command without any pre-configured scope.|
-|`allow-close`|Enables the close command without any pre-configured scope.|
-|`deny-close`|Denies the close command without any pre-configured scope.|
-|`allow-close-all`|Enables the close_all command without any pre-configured scope.|
-|`deny-close-all`|Denies the close_all command without any pre-configured scope.|
-|`allow-force-close`|Enables the force_close command without any pre-configured scope.|
-|`deny-force-close`|Denies the force_close command without any pre-configured scope.|
-|`allow-open`|Enables the open command without any pre-configured scope.|
-|`deny-open`|Denies the open command without any pre-configured scope.|
-|`allow-read`|Enables the read command without any pre-configured scope.|
-|`deny-read`|Denies the read command without any pre-configured scope.|
-|`allow-write`|Enables the write command without any pre-configured scope.|
-|`deny-write`|Denies the write command without any pre-configured scope.|
-|`allow-write-binary`|Enables the write_binary command without any pre-configured scope.|
-|`deny-write-binary`|Denies the write_binary command without any pre-configured scope.|
+
+### Permission Table 
+
+<table>
+<tr>
+<th>Identifier</th>
+<th>Description</th>
+</tr>
+
+
+<tr>
+<td>
+
+`serialport:allow-available-ports`
+
+</td>
+<td>
+
+Enables the available_ports command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:deny-available-ports`
+
+</td>
+<td>
+
+Denies the available_ports command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:allow-cancel-read`
+
+</td>
+<td>
+
+Enables the cancel_read command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:deny-cancel-read`
+
+</td>
+<td>
+
+Denies the cancel_read command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:allow-close`
+
+</td>
+<td>
+
+Enables the close command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:deny-close`
+
+</td>
+<td>
+
+Denies the close command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:allow-close-all`
+
+</td>
+<td>
+
+Enables the close_all command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:deny-close-all`
+
+</td>
+<td>
+
+Denies the close_all command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:allow-force-close`
+
+</td>
+<td>
+
+Enables the force_close command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:deny-force-close`
+
+</td>
+<td>
+
+Denies the force_close command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:allow-open`
+
+</td>
+<td>
+
+Enables the open command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:deny-open`
+
+</td>
+<td>
+
+Denies the open command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:allow-read`
+
+</td>
+<td>
+
+Enables the read command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:deny-read`
+
+</td>
+<td>
+
+Denies the read command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:allow-write`
+
+</td>
+<td>
+
+Enables the write command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:deny-write`
+
+</td>
+<td>
+
+Denies the write command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:allow-write-binary`
+
+</td>
+<td>
+
+Enables the write_binary command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`serialport:deny-write-binary`
+
+</td>
+<td>
+
+Denies the write_binary command without any pre-configured scope.
+
+</td>
+</tr>
+</table>

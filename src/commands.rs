@@ -5,7 +5,7 @@ use std::sync::mpsc;
 use std::sync::mpsc::{Receiver, Sender, TryRecvError};
 use std::thread;
 use std::time::Duration;
-use tauri::{command, AppHandle, Manager, Runtime, State, Window};
+use tauri::{command, AppHandle, Emitter, Runtime, State, Window};
 
 fn get_serialport<T, F: FnOnce(&mut SerialPortInfo) -> Result<T, Err>>(
     state: State<'_, SerialPortState>,
