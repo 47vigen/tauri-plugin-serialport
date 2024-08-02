@@ -1,5 +1,6 @@
 use crate::err::Err;
-use crate::state::{ReadData, SerialPortInfo, SerialPortState};
+use crate::state::{SerialPortInfo, SerialPortState};
+use serde::Serialize;
 use serialport::{DataBits, FlowControl, Parity, StopBits};
 use std::sync::mpsc;
 use std::sync::mpsc::{Receiver, Sender, TryRecvError};
@@ -244,6 +245,24 @@ pub fn open<R: Runtime>(
     }
 }
 
+#[derive(Serialize, Clone)]
+pub struct ReadData<'a> {
+    pub hex_string: String,
+    pub data: &'a [u8],
+    pub size: usize,
+}
+
+fn to_hex_string(data: &[u8]) -> Result<String, &'static str> {
+    // Try to perform the conversion and handle any unexpected errors
+    let hex_string = data
+        .iter()
+        .map(|byte| format!("{:02x}", byte))
+        .collect::<String>();
+
+    // In case of any issue, which is unlikely here, return an error
+    Ok(hex_string)
+}
+
 #[command]
 pub fn read<R: Runtime>(
     _app: AppHandle<R>,
@@ -281,11 +300,26 @@ pub fn read<R: Runtime>(
                         let mut serial_buf: Vec<u8> = vec![0; size.unwrap_or(1024)];
                         match serial.read(serial_buf.as_mut_slice()) {
                             Ok(size) => {
+                                // Extract the raw data slice
+                                let raw_data = &serial_buf[..size];
+
+                                // Convert the data to a hexadecimal string and handle potential errors
+                                let hex_string = match to_hex_string(raw_data) {
+                                    Ok(hex) => hex,
+                                    Err(e) => {
+                                        println!("Failed to convert to hex string: {}", e);
+                                        String::new() // Default to an empty string or handle as needed
+                                    }
+                                };
+
+                                println!("Received data (hex): {}", hex_string);
                                 println!("Serial port: {} Read data size: {}", &port_name, size);
+
                                 match window.emit(
                                     &read_event,
                                     ReadData {
                                         data: &serial_buf[..size],
+                                        hex_string,
                                         size,
                                     },
                                 ) {

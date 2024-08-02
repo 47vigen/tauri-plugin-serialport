@@ -10,6 +10,7 @@ export interface InvokeResult {
 export interface ReadDataResult {
   size: number
   data: number[]
+  hex_string: string
 }
 
 export interface SerialportOptions {
@@ -179,7 +180,10 @@ class Serialport {
    * @param {function} fn
    * @return {Promise<void>}
    */
-  async listen(fn: (...args: any[]) => void, isDecode = true): Promise<void> {
+  async listen(
+    fn: (...args: any[]) => void,
+    isDecode: boolean | "hex" = true
+  ): Promise<void> {
     try {
       const appWindow = getCurrent()
 
@@ -189,7 +193,9 @@ class Serialport {
         readEvent,
         ({ payload }) => {
           try {
-            if (isDecode) {
+            if (isDecode === "hex") {
+              fn(payload.hex_string)
+            } else if (isDecode) {
               const decoder = new TextDecoder(this.encoding)
               const data = decoder.decode(new Uint8Array(payload.data))
               fn(data)
