@@ -1,6 +1,6 @@
 [package]
 name = "tauri-plugin-serialport"
-version = "2.8.0"
+version = "2.9.0"
 authors = [ "47vigen" ]
 edition = "2021"
 rust-version = "1.70"
