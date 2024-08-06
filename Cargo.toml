@@ -8,7 +8,7 @@ exclude = ["/examples", "/webview-dist", "/webview-src", "/node_modules"]
 links = "tauri-plugin-serialport"
 
 [dependencies]
-tauri = { version = "2.0.0-beta" }
+tauri = { version = "2.0.0-rc" }
 serde = "1.0"
 thiserror = "1.0"
 serialport = "4.3.0"
