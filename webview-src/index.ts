@@ -1,6 +1,6 @@
 import { UnlistenFn } from "@tauri-apps/api/event"
 import { invoke } from "@tauri-apps/api/core"
-import { getCurrent } from "@tauri-apps/api/window"
+import { getCurrentWindow } from "@tauri-apps/api/window"
 
 export interface InvokeResult {
   code: number
@@ -185,7 +185,7 @@ class Serialport {
     isDecode: boolean | "hex" = true
   ): Promise<void> {
     try {
-      const appWindow = getCurrent()
+      const appWindow = getCurrentWindow()
 
       await this.cancelListen()
       let readEvent = "plugin-serialport-read-" + this.options.portName

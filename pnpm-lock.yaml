@@ -1,35 +1,42 @@
-lockfileVersion: '6.0'
+lockfileVersion: '9.0'
 
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  '@tauri-apps/api':
-    specifier: '>=2.0.0-beta.0'
-    version: 2.0.0-beta.11
-  tslib:
-    specifier: ^2.1.0
-    version: 2.6.2
+importers:
 
-devDependencies:
-  typescript:
-    specifier: 4.7.3
-    version: 4.7.3
+  .:
+    dependencies:
+      '@tauri-apps/api':
+        specifier: '>=2.0.0-rc.0'
+        version: 2.0.0-rc.0
+      tslib:
+        specifier: ^2.1.0
+        version: 2.6.2
+    devDependencies:
+      typescript:
+        specifier: 4.7.3
+        version: 4.7.3
 
 packages:
 
-  /@tauri-apps/api@2.0.0-beta.11:
-    resolution: {integrity: sha512-wJRY+fBUm3KpqZDHMIz5HRv+1vlnvRJ/dFxiyY3NlINTx2qXqDou5qWYcP1CuZXsd39InWVPV3FAZvno/kGCkA==}
-    engines: {node: '>= 18', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
-    dev: false
+  '@tauri-apps/api@2.0.0-rc.0':
+    resolution: {integrity: sha512-v454Qs3REHc3Za59U+/eSmBsdmF+3NE5+76+lFDaitVqN4ZglDHENDaMARYKGJVZuxiSkzyqG0SeG7lLQjVkPA==}
+    engines: {node: '>= 18.18', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
 
-  /tslib@2.6.2:
+  tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
-    dev: false
 
-  /typescript@4.7.3:
+  typescript@4.7.3:
     resolution: {integrity: sha512-WOkT3XYvrpXx4vMMqlD+8R8R37fZkjyLGlxavMc4iB8lrl8L0DeTcHbYgw/v0N/z9wAFsgBhcsF0ruoySS22mA==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
+
+snapshots:
+
+  '@tauri-apps/api@2.0.0-rc.0': {}
+
+  tslib@2.6.2: {}
+
+  typescript@4.7.3: {}

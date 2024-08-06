@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
-import { getCurrent } from "@tauri-apps/api/window";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 class Serialport {
     isOpen;
     unListen;
@@ -134,7 +134,7 @@ class Serialport {
      */
     async listen(fn, isDecode = true) {
         try {
-            const appWindow = getCurrent();
+            const appWindow = getCurrentWindow();
             await this.cancelListen();
             let readEvent = "plugin-serialport-read-" + this.options.portName;
             this.unListen = await appWindow.listen(readEvent, ({ payload }) => {
