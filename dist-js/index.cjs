@@ -1,11 +1,9 @@
-import { invoke } from "@tauri-apps/api/core";
-import { getCurrentWindow } from "@tauri-apps/api/window";
+'use strict';
+
+var core = require('@tauri-apps/api/core');
+var window = require('@tauri-apps/api/window');
+
 class Serialport {
-    isOpen;
-    unListen;
-    encoding;
-    options;
-    size;
     constructor(options) {
         this.isOpen = false;
         this.encoding = options.encoding || "utf-8";
@@ -26,7 +24,7 @@ class Serialport {
      */
     static async available_ports() {
         try {
-            return await invoke("plugin:serialport|available_ports");
+            return await core.invoke("plugin:serialport|available_ports");
         }
         catch (error) {
             return Promise.reject(error);
@@ -38,7 +36,7 @@ class Serialport {
      * @return {Promise<void>}
      */
     static async forceClose(portName) {
-        return await invoke("plugin:serialport|force_close", {
+        return await core.invoke("plugin:serialport|force_close", {
             portName
         });
     }
@@ -47,7 +45,7 @@ class Serialport {
      * @return {Promise<void>}
      */
     static async closeAll() {
-        return await invoke("plugin:serialport|close_all");
+        return await core.invoke("plugin:serialport|close_all");
     }
     /**
      * @description: Stops listening on a serial port
@@ -71,7 +69,7 @@ class Serialport {
      */
     async cancelRead() {
         try {
-            return await invoke("plugin:serialport|cancel_read", {
+            return await core.invoke("plugin:serialport|cancel_read", {
                 portName: this.options.portName
             });
         }
@@ -116,7 +114,7 @@ class Serialport {
                 return;
             }
             await this.cancelRead();
-            const res = await invoke("plugin:serialport|close", {
+            const res = await core.invoke("plugin:serialport|close", {
                 portName: this.options.portName
             });
             await this.cancelListen();
@@ -134,7 +132,7 @@ class Serialport {
      */
     async listen(fn, isDecode = true) {
         try {
-            const appWindow = getCurrentWindow();
+            const appWindow = window.getCurrentWindow();
             await this.cancelListen();
             let readEvent = "plugin-serialport-read-" + this.options.portName;
             this.unListen = await appWindow.listen(readEvent, ({ payload }) => {
@@ -176,7 +174,7 @@ class Serialport {
             if (this.isOpen) {
                 return;
             }
-            const res = await invoke("plugin:serialport|open", {
+            const res = await core.invoke("plugin:serialport|open", {
                 portName: this.options.portName,
                 baudRate: this.options.baudRate,
                 dataBits: this.options.dataBits,
@@ -199,7 +197,7 @@ class Serialport {
      */
     async read(options) {
         try {
-            return await invoke("plugin:serialport|read", {
+            return await core.invoke("plugin:serialport|read", {
                 portName: this.options.portName,
                 timeout: options?.timeout || this.options.timeout,
                 size: options?.size || this.size
@@ -263,7 +261,7 @@ class Serialport {
             if (!this.isOpen) {
                 return Promise.reject(`Serial port ${this.options.portName} not opened!`);
             }
-            return await invoke("plugin:serialport|write", {
+            return await core.invoke("plugin:serialport|write", {
                 value,
                 portName: this.options.portName
             });
@@ -283,7 +281,7 @@ class Serialport {
                 return Promise.reject(`Serial port ${this.options.portName} not opened!`);
             }
             if (value instanceof Uint8Array || value instanceof Array) {
-                return await invoke("plugin:serialport|write_binary", {
+                return await core.invoke("plugin:serialport|write_binary", {
                     value: Array.from(value),
                     portName: this.options.portName
                 });
@@ -297,5 +295,6 @@ class Serialport {
         }
     }
 }
-export { Serialport };
 // 🐍
+
+exports.Serialport = Serialport;

@@ -49,7 +49,7 @@
           "minimum": 1.0
         },
         "description": {
-          "description": "Human-readable description of what the permission does. Tauri convention is to use <h4> headings in markdown content for Tauri documentation generation purposes.",
+          "description": "Human-readable description of what the permission does. Tauri convention is to use `<h4>` headings in markdown content for Tauri documentation generation purposes.",
           "type": [
             "string",
             "null"
@@ -111,7 +111,7 @@
           "type": "string"
         },
         "description": {
-          "description": "Human-readable description of what the permission does. Tauri internal convention is to use <h4> headings in markdown content for Tauri documentation generation purposes.",
+          "description": "Human-readable description of what the permission does. Tauri internal convention is to use `<h4>` headings in markdown content for Tauri documentation generation purposes.",
           "type": [
             "string",
             "null"
@@ -295,130 +295,112 @@
       "type": "string",
       "oneOf": [
         {
-          "description": "allow-available-ports -> Enables the available_ports command without any pre-configured scope.",
+          "description": "Enables the available_ports command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-available-ports"
-          ]
+          "const": "allow-available-ports",
+          "markdownDescription": "Enables the available_ports command without any pre-configured scope."
         },
         {
-          "description": "deny-available-ports -> Denies the available_ports command without any pre-configured scope.",
+          "description": "Denies the available_ports command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-available-ports"
-          ]
+          "const": "deny-available-ports",
+          "markdownDescription": "Denies the available_ports command without any pre-configured scope."
         },
         {
-          "description": "allow-cancel-read -> Enables the cancel_read command without any pre-configured scope.",
+          "description": "Enables the cancel_read command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-cancel-read"
-          ]
+          "const": "allow-cancel-read",
+          "markdownDescription": "Enables the cancel_read command without any pre-configured scope."
         },
         {
-          "description": "deny-cancel-read -> Denies the cancel_read command without any pre-configured scope.",
+          "description": "Denies the cancel_read command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-cancel-read"
-          ]
+          "const": "deny-cancel-read",
+          "markdownDescription": "Denies the cancel_read command without any pre-configured scope."
         },
         {
-          "description": "allow-close -> Enables the close command without any pre-configured scope.",
+          "description": "Enables the close command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-close"
-          ]
+          "const": "allow-close",
+          "markdownDescription": "Enables the close command without any pre-configured scope."
         },
         {
-          "description": "deny-close -> Denies the close command without any pre-configured scope.",
+          "description": "Denies the close command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-close"
-          ]
+          "const": "deny-close",
+          "markdownDescription": "Denies the close command without any pre-configured scope."
         },
         {
-          "description": "allow-close-all -> Enables the close_all command without any pre-configured scope.",
+          "description": "Enables the close_all command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-close-all"
-          ]
+          "const": "allow-close-all",
+          "markdownDescription": "Enables the close_all command without any pre-configured scope."
         },
         {
-          "description": "deny-close-all -> Denies the close_all command without any pre-configured scope.",
+          "description": "Denies the close_all command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-close-all"
-          ]
+          "const": "deny-close-all",
+          "markdownDescription": "Denies the close_all command without any pre-configured scope."
         },
         {
-          "description": "allow-force-close -> Enables the force_close command without any pre-configured scope.",
+          "description": "Enables the force_close command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-force-close"
-          ]
+          "const": "allow-force-close",
+          "markdownDescription": "Enables the force_close command without any pre-configured scope."
         },
         {
-          "description": "deny-force-close -> Denies the force_close command without any pre-configured scope.",
+          "description": "Denies the force_close command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-force-close"
-          ]
+          "const": "deny-force-close",
+          "markdownDescription": "Denies the force_close command without any pre-configured scope."
         },
         {
-          "description": "allow-open -> Enables the open command without any pre-configured scope.",
+          "description": "Enables the open command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-open"
-          ]
+          "const": "allow-open",
+          "markdownDescription": "Enables the open command without any pre-configured scope."
         },
         {
-          "description": "deny-open -> Denies the open command without any pre-configured scope.",
+          "description": "Denies the open command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-open"
-          ]
+          "const": "deny-open",
+          "markdownDescription": "Denies the open command without any pre-configured scope."
         },
         {
-          "description": "allow-read -> Enables the read command without any pre-configured scope.",
+          "description": "Enables the read command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-read"
-          ]
+          "const": "allow-read",
+          "markdownDescription": "Enables the read command without any pre-configured scope."
         },
         {
-          "description": "deny-read -> Denies the read command without any pre-configured scope.",
+          "description": "Denies the read command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-read"
-          ]
+          "const": "deny-read",
+          "markdownDescription": "Denies the read command without any pre-configured scope."
         },
         {
-          "description": "allow-write -> Enables the write command without any pre-configured scope.",
+          "description": "Enables the write command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-write"
-          ]
+          "const": "allow-write",
+          "markdownDescription": "Enables the write command without any pre-configured scope."
         },
         {
-          "description": "deny-write -> Denies the write command without any pre-configured scope.",
+          "description": "Denies the write command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-write"
-          ]
+          "const": "deny-write",
+          "markdownDescription": "Denies the write command without any pre-configured scope."
         },
         {
-          "description": "allow-write-binary -> Enables the write_binary command without any pre-configured scope.",
+          "description": "Enables the write_binary command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-write-binary"
-          ]
+          "const": "allow-write-binary",
+          "markdownDescription": "Enables the write_binary command without any pre-configured scope."
         },
         {
-          "description": "deny-write-binary -> Denies the write_binary command without any pre-configured scope.",
+          "description": "Denies the write_binary command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-write-binary"
-          ]
+          "const": "deny-write-binary",
+          "markdownDescription": "Denies the write_binary command without any pre-configured scope."
         }
       ]
     }
